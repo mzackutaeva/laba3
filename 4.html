@@ -1,0 +1,251 @@
+<!--Общий блок (задний фон - зелёный, ширина - 330 пикселей, высота - 170 пикселей)-->
+<div style='background:#3CB371;width:330px;height:170px;'>
+<!--Блок левой стрелочки, назначаем id (left_but), по нему будем отслежиать нажатие на java script -->
+<div id='left_but'>
+<!--Верхняя часть стрелочки, назначаем классы (их будем отключать и подключать через js) и id-->
+    <div class="arrow-1-top disable" id='left_but1'></div>
+<!--Нижняя часть стрелочки, назначаем классы (их будем отключать и подключать через js) и id-->
+    <div class="arrow-1-bottom disable" id='left_but2'></div>
+</div>
+<!--Поле с текущей страницей, делаем позиционирование абсолютное (по пикселям), выравнивание по центру, задаём высоту, ширину, белый шрифт, назначаем id-->
+<div style='text-align:center;width:300px;position:absolute;top:50px;left:15px;font-size:50px;color:white' id ='page'>
+<!--Собственно текущая страница-->
+1/5
+</div>
+<!--Блок правой стрелочки, назначаем id (right_but), по нему будем отслежиать нажатие на java script -->
+<div id='right_but'>
+<!--Верхняя часть стрелочки, назначаем классы (их будем отключать и подключать через js) и id-->
+    <div class="arrow-2-top arrow-2-top-enable" id='right_but1'></div>
+	<!--Нижняя часть стрелочки, назначаем классы (их будем отключать и подключать через js) и id-->
+    <div class="arrow-2-bottom arrow-2-bottom-enable" id='right_but2'></div>
+</div>
+</div>
+
+<!--Назначаем стили-->
+<style>
+/*Стиль левой стрелочки*/
+/*Задаём высоту, ширину, абсоютное позиционирование, сдвиг слева и отступы по 20 пикселей с каждой стороны*/
+#left_but {
+
+    height: 120px;
+    width: 80px;
+    position:absolute;
+  left:20px;
+    margin: 20px;
+}
+
+/*Кадры анимации частей левой стрелочки (будет выполняться вращение с 45 (-45) градусов до 0)*/
+@keyframes anim3 { from {transform: rotate(-45deg); } to { transform: rotate(0deg); }  }
+@keyframes anim4 { from {transform: rotate(45deg); } to { transform: rotate(0deg); }  }
+
+/*Стили частей левой стрелочки*/
+.arrow-1-top, 
+.arrow-1-bottom {
+    background: white;
+    height: 10px;
+left:-20px;
+    position: absolute;
+    top: 60px;
+    width: 100px;
+}
+
+/*Задаём стили верхней части стрелочки*/
+.arrow-1-top {
+  top: 60px;
+    transform: rotate(-45deg);
+    transform-origin: bottom left;
+}
+/*Задаём стили нижней части стрелочки*/
+.arrow-1-bottom {
+    transform: rotate(45deg);
+    transform-origin: top left;
+}
+
+/*задаём что будет происходит при наведении на левую стрелочку*/
+/*Будут включаться анимации частей стрелочки (поворот)*/
+#left_but:hover .arrow-1-top-enable{
+	animation-name:anim3;
+animation-play-state:running;
+animation-duration:2s;
+animation-fill-mode:both;
+}
+
+#left_but:hover .arrow-1-bottom-enable{
+	animation-name:anim4;
+animation-play-state:running;
+animation-duration:2s;
+animation-fill-mode:both;
+}
+
+/*Стиль правой стрелочки*/
+/*Задаём высоту, ширину, абсоютное позиционирование, сдвиг слева и отступы по 20 пикселей с каждой стороны*/
+#right_but {
+    height: 120px;
+    width: 100px;
+  position:absolute;
+	left:200px;
+    margin: 20px;
+}
+
+/*Кадры анимации частей правой стрелочки (будет выполняться вращение с 45 (-45) градусов до 0)*/
+@keyframes anim1 { from {transform: rotate(45deg); } to { transform: rotate(0deg); }  }
+@keyframes anim2 { from {transform: rotate(-45deg); } to { transform: rotate(0deg); }  }
+
+/*Стили частей правой стрелочки*/
+.arrow-2-top, 
+.arrow-2-bottom {
+    background: white;
+    height: 10px;
+   
+    position: absolute;
+    top: 60px;
+    width: 100px;
+}
+/*Задаём высоту верхней части стрелочки*/
+.arrow-2-top {
+    top: 60px;
+}
+
+/*Задаём стили верхней части стрелочки*/
+.arrow-2-top {
+    transform: rotate(45deg);
+    transform-origin: bottom right;
+}
+/*Задаём стили нижней части стрелочки*/
+.arrow-2-bottom {
+    transform: rotate(-45deg);
+    transform-origin: top right;
+}
+
+/*задаём что будет происходит при наведении на левую стрелочку*/
+/*Будут включаться анимации частей стрелочки (поворот)*/
+#right_but:hover .arrow-2-top-enable{
+	animation-name:anim1;
+animation-state:running;
+animation-duration:2s;
+animation-fill-mode:both;
+}
+
+#right_but:hover .arrow-2-bottom-enable{
+	animation-name:anim2;
+animation-state:running;
+animation-duration:2s;
+animation-fill-mode:both;
+}
+
+/*Класс, который будет установлен заблокированной стрелочке (прозрачность 0.5 из 1, трансформация к 0 градусов, остановка анимации)*/
+.disable{
+opacity:0.5;
+transform: rotate(0deg);
+animation-play-state:paused;
+}
+
+</style>
+
+<script>
+/*скрипт, который активируется при нажатии на левую стрелочку*/
+document.querySelector("#right_but").onclick = function(){
+
+//Если верхняя часть правой стрелочки не заблокирована
+if(!document.querySelector('#right_but1').classList.contains('disable'))
+{
+
+//Получаем данные с элемента с id=page и делим по /
+  var page = document.querySelector('#page').innerText.split('/');
+  //Добавляем 1 к первой части id=page
+  page[0]=1+Number(page[0]);
+  //Если первая часть теперь меньше или равна второй
+  if(page[0]<=Number(page[1]))
+  
+  
+  //меняем текст элемента page
+	document.querySelector('#page').innerText = page[0]+"/"+page[1];
+	
+	//если первая часть равна второй части, то правой стрелке устанавливается класс блокировки, убираем класс незаблокированного элемента
+	if(page[0]==Number(page[1])){
+		document.querySelector('#right_but1').classList.add("disable");
+		document.querySelector('#right_but2').classList.add("disable");
+		
+		document.querySelector('#right_but1').classList.remove("arrow-2-top-enable");
+		document.querySelector('#right_but2').classList.remove("arrow-2-bottom-enable");
+		}
+		//иначе - убрать класс блокировки и установить класс для разблокированного элемента
+		else
+		{
+		document.querySelector('#right_but1').classList.remove("disable");
+		document.querySelector('#right_but2').classList.remove("disable");
+		
+		document.querySelector('#right_but1').classList.add("arrow-2-top-enable");
+		document.querySelector('#right_but2').classList.add("arrow-2-bottom-enable");
+		}
+		//если первая часть равна 1, то левой стрелке устанавливается класс блокировки, убираем класс незаблокированного элемента
+		if(page[0]==1){
+		document.querySelector('#left_but1').classList.add("disable");
+		document.querySelector('#left_but2').classList.add("disable");
+		
+		document.querySelector('#left_but1').classList.remove("arrow-1-top-enable");
+		document.querySelector('#left_but2').classList.remove("arrow-1-bottom-enable");
+		}
+				//иначе - убрать класс блокировки и установить класс для разблокированного элемента
+		else
+		{
+		document.querySelector('#left_but1').classList.remove("disable");
+		document.querySelector('#left_but2').classList.remove("disable");
+		
+		document.querySelector('#left_but1').classList.add("arrow-1-top-enable");
+		document.querySelector('#left_but2').classList.add("arrow-1-bottom-enable");
+		}
+}
+}
+
+/*скрипт, который активируется при нажатии на правую стрелочку*/
+document.querySelector("#left_but").onclick = function(){
+//Если верхняя часть левой стрелочки не заблокирована
+if(!document.querySelector('#left_but1').classList.contains('disable'))
+{
+//Получаем данные с элемента с id=page и делим по /
+  var page = document.querySelector('#page').innerText.split('/');
+    //Уменьшаем на 1 первую часть id=page
+  page[0]=Number(page[0])-1;
+    //Если первая часть теперь больше или равна 1
+  if(page[0]>=1)
+	document.querySelector('#page').innerText = page[0]+"/"+page[1];
+	
+		if(page[0]==Number(page[1])){
+		//если первая часть равна второй части, то правой стрелке устанавливается класс блокировки, убираем класс незаблокированного элемента
+		document.querySelector('#right_but1').classList.add("disable");
+		document.querySelector('#right_but2').classList.add("disable");
+		
+		document.querySelector('#right_but1').classList.remove("arrow-2-top-enable");
+		document.querySelector('#right_but2').classList.remove("arrow-2-bottom-enable");
+		}
+			//иначе - убрать класс блокировки и установить класс для разблокированного элемента
+		else
+		{
+		document.querySelector('#right_but1').classList.remove("disable");
+		document.querySelector('#right_but2').classList.remove("disable");
+		
+		document.querySelector('#right_but1').classList.add("arrow-2-top-enable");
+		document.querySelector('#right_but2').classList.add("arrow-2-bottom-enable");
+		}
+		
+		//если первая часть равна 1, то левой стрелке устанавливается класс блокировки, убираем класс незаблокированного элемента
+	if(page[0]==1){
+		document.querySelector('#left_but1').classList.add("disable");
+		document.querySelector('#left_but2').classList.add("disable");
+		
+		document.querySelector('#left_but1').classList.remove("arrow-1-top-enable");
+		document.querySelector('#left_but2').classList.remove("arrow-1-bottom-enable");
+		}
+				//иначе - убрать класс блокировки и установить класс для разблокированного элемента
+		else
+		{
+		document.querySelector('#left_but1').classList.remove("disable");
+		document.querySelector('#left_but2').classList.remove("disable");
+		
+		document.querySelector('#left_but1').classList.add("arrow-1-top-enable");
+		document.querySelector('#left_but2').classList.add("arrow-1-bottom-enable");
+		}
+}
+}
+</script>

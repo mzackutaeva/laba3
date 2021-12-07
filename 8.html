@@ -1,0 +1,26 @@
+<div style='border:1px solid black; margin:10px; padding:10px; display: flex; flex-direction: column;background:#4B3858'>
+<input style='width:100%;order: 2; background:#36293D; border-radius:5px;margin-top:5px;'>
+<div style='position:relative;left:0;order: 1; color:white'>Your Name</div>
+</div>
+
+<style>
+div{
+}
+
+input:focus ~div {
+animation-name: text_align_anim;
+animation-duration: 10s;
+animation-play-state: running;
+animation-fill-mode: forwards;
+}
+
+@keyframes text_align_anim {
+from {
+left:0%;
+}
+to {
+left:50%;
+}
+}
+
+</style>
